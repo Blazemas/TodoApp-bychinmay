@@ -1,0 +1,66 @@
+{% extends 'base2.html' %}
+{% block title %}
+home
+{% endblock title %}
+{% block body %}
+
+<!-- Navbar with welcome message and logout button -->
+<div class="container">
+    <h3>Add To Do</h3>
+    <form action="/" method="POST">
+        <div class="mb-3">
+            <label for="todo_title" class="form-label">To do</label>
+            <input type="text" class="form-control" name="title" id="todo_title" aria-describedby="todomotiv" required>
+            <div id="todomotiv" class="form-text">Keep yourself busy !!</div>
+        </div>
+        <div class="mb-3">
+            <label for="tododesc" class="form-label">Task Description</label>
+            <input type="text" class="form-control" name="desc" id="tododesc">
+        </div>
+        <button type="submit" class="btn btn-dark">Submit</button>
+    </form>
+</div>
+<br>
+
+<div class="container">
+
+    {% if alltodo|length == 0 %}
+    <div class="alert alert-secondary" role="alert">
+        No records Available! Add your Todo
+    </div>
+
+    {% else %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Srno</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Date</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for todo in alltodo %}
+            <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td>{{ todo.title }}</td>
+                <td>{{ todo.desc }}</td>
+                <td>{{ todo.date_created }}</td>
+                <td>
+                    <a href="/update/{{ todo.srno }}" class="btn btn-dark btn-sm mx-1">Update</a>
+                    <a href="/delete/{{ todo.srno }}" class="btn btn-dark btn-sm mx-1">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+</div>
+
+<!-- Linking CSS and JS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="{{ url_for('static', filename='test/trial.js') }}"></script>
+{% endblock body %}

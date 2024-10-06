@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}
+home
+{% endblock title %}
+{% block body %}
+
+<div class="container">
+  <h3>Add To Do</h3>
+  <form action="/" method="POST">
+    <div class="mb-3">
+      <label for="todo_title" class="form-label">To do</label>
+      <input type="text" class="form-control" name="title" id="todo_title" aria-describedby="todomotiv">
+      <div id="todomotiv" class="form-text">Keep yourself busy !!</div>
+    </div>
+    <div class="mb-3">
+      <label for="tododesc" class="form-label">Task Description</label>
+      <input type="text" class="form-control" name="desc" id="tododesc">
+    </div>
+    <button type="submit" class="btn btn-dark">Submit</button>
+  </form>
+</div>
+<br>
+
+<div class="container">
+
+  {% if alltodo|length==0 %}
+
+  <div class="alert alert-secondary" role="alert">
+    No records Available! Add your Todo
+  </div>
+
+  {% else %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Srno</th>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">date</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      {% for todo in alltodo %}
+
+      <tr>
+        <!-- we could have used todo.srno index of index but if one row is deleted then it would be inconsistent -->
+        <!-- that's why we use jinja2 snippet syntax for indexing which is loop.index -->
+        <th scope="row">{{loop.index}}</th>
+        <td> {{todo.title}}</td>
+        <td> {{todo.desc}}</td>
+        <td> {{todo.date_created}}</td>
+        <td>
+          <a href="/update/{{todo.srno}}" type="button" class="btn btn-dark btn-sm mx-1">Update</button></a>
+          <a href="/delete/{{todo.srno}}" type="button" class="btn btn-dark btn-sm mx-1">Delete</button></a>
+        </td>
+      </tr>
+
+      {% endfor %}
+      {% endif %}
+
+</div>
+
+<!-- how we use the css and javascript files from static folder : "jurl" shortcut of jinja2 after link and script -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="{{ url_for('static', filename='test/trial.js') }}"></script> 
+{% endblock body %}

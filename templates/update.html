@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block body %}
+    
+<div class="container">
+    <h3>Update Todo</h3>
+    <form action="/update/{{todo1.srno}}" method="POST">
+      <div class="mb-3">
+        <label for="todo_title" class="form-label">To do</label>
+        <input type="text" class="form-control" name="title" value="{{todo1.title}}" id="todo_title" aria-describedby="todomotiv">
+        <div id="todomotiv" class="form-text">Keep yourself busy !!</div>
+      </div>
+      <div class="mb-3">
+        <label for="tododesc" class="form-label">Task Description</label>
+        <input type="text" class="form-control" name="desc"  value="{{todo1.desc}}" id="tododesc">
+      </div>
+      <button type="submit" class="btn btn-dark">Update</button>
+    </form>
+</div>
+  
+{% endblock body %}
